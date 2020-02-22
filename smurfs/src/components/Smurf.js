@@ -6,7 +6,7 @@ const Smurf = (props) => {
 
     return (
 
-        <div>
+        <div className = "smurf">
             <h3>Name: {props.item.name}</h3>
             <p>Age: {props.item.age}</p>
             <p>Height: {props.item.height}</p>

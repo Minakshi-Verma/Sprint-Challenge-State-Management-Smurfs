@@ -1,10 +1,11 @@
 import React, {useState, useContext} from 'react';
-import {FormContext} from '../contexts/FormContext'
-import axios from 'axios';
+import {SmurfContext} from '../contexts/SmurfContext'
+// import axios from 'axios';
 
 
 const Form = () =>{
-    const {addSmurf} = useContext(FormContext)
+   const {addSmurf} = useContext(SmurfContext)   // here we are using destructured value of addSmurf so just use addSmurf in handleSubmit(otherwise you will need to to use addSmurf.addSmurf)
+  
 
     const [newSmurf, setNewSmurf] = useState ({name:'', age:'', height: '', id: ''})
 
@@ -18,15 +19,15 @@ const Form = () =>{
     //craete handleSubmit fx
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log(newSmurf)
-        axios
-        .post("http://localhost:3333/smurfs",newSmurf)
-        .then(res=>{
-            console.log("I am the response from post request",res)
-        })
-        .catch(err=>{
-            console.log("I am the error from form", err)
-        })
+        addSmurf(newSmurf)
+        // axios
+        // .post("http://localhost:3333/smurfs",newSmurf)
+        // .then(res=>{
+        //     console.log("I am the response from post request",res)
+        // })
+        // .catch(err=>{
+        //     console.log("I am the error from form", err)
+        // })
         
     }
   
@@ -35,8 +36,8 @@ const Form = () =>{
 
         <div>
             <form onSubmit = {handleSubmit}>
-                <div>
-                    <input 
+                <div >
+                    <input className = "input"
                     type = "text"
                     name = "name"
                     value = {name}
@@ -44,8 +45,8 @@ const Form = () =>{
                     />
                 </div>
 
-                <div>
-                    <input 
+                <div className = "input">
+                    <input className = "input"
                     type = "text"
                     name = "age"
                     value = {age}
@@ -53,8 +54,8 @@ const Form = () =>{
                     />
                 </div>
 
-                <div>
-                    <input 
+                <div >
+                    <input className = "input"
                     type = "text"
                     name = "height"
                     value = {height}
@@ -63,7 +64,7 @@ const Form = () =>{
                 </div>
 
                 <div>
-                    <input 
+                    <input className = "input"
                     type = "text"
                     name = "id"
                     value = {id}

@@ -1,31 +1,19 @@
-import React, {useState,useEffect} from 'react' ;
-import axios from 'axios';
+import React, { useContext } from 'react' ;
 import Smurf from './Smurf'
+import {SmurfContext} from '../contexts/SmurfContext'
 
 
 const SmurfsList =() => {
-     const [smurf, setSmurf] = useState([])
-
-       useEffect(()=>{
-        axios
-        .get(`http://localhost:3333/smurfs`)
-        .then(res =>{
-            console.log("I am the data fromsmurfsList",res)
-            setSmurf(res.data)
-        })
-        .catch(err =>{
-            console.log("I am thee error msg", err)
-        })
-
-       },[])
-
-
+    const smurfs = useContext(SmurfContext) 
+    // const {smurfs} = useContext(SmurfContext) if you use the destured vale of smurfs, you can just use smurfs in map(instean of smurfs.smurfs)
+console.log("I am smurfs",smurfs)
     return(
-        <div>            
-            {smurf.map((item, id)=>((
+        <div className = "smurfList">            
+            {smurfs.smurfs.map((item, id)=>((
                 <Smurf key = {item.id} item ={item}/>
             )))}            
            
+            
         </div>
     )
 }

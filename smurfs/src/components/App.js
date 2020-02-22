@@ -1,29 +1,53 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SmurfsList from './SmurfsList';
-import {FormContext} from '../contexts/FormContext';
+import axios from 'axios';
+import {SmurfContext} from '../contexts/SmurfContext';
 
 import Form from './Form';
 import "./App.css";
 
 
 const App = () => {
+// const [smurfArray, setSmurfArray] = useState()
+  const [smurfs, setSmurfs] = useState([])
 
-  const [smurf, setSmurf] = useState()
+ 
+
+       useEffect(()=>{
+        axios
+        .get(`http://localhost:3333/smurfs`)
+        .then(res =>{
+            console.log("I am the smurfList array from App",res)
+            setSmurfs(res.data)
+        })
+        .catch(err =>{
+            console.log("I am the error msg", err)
+        })
+
+       },[])
 
   const addSmurf = (item) =>{
-    return setSmurf([...smurf, item])
+     setSmurfs([...smurfs, item])
+    axios
+    .post("http://localhost:3333/smurfs",item)
+    .then(res=>{
+        console.log("I am the response from post request",res)
+    })
+    .catch(err=>{
+        console.log("I am the error from form", err)
+    })
       
   }
   
     return (
       <div className="App">
         <h1>SMURFS VILLAGE</h1>
-        <FormContext.Provider value = {addSmurf}>
+        <SmurfContext.Provider value = {{addSmurf,smurfs}}>
 
         <SmurfsList />
         <Form  addSmurf ={addSmurf}/>
 
-        </FormContext.Provider>
+        </SmurfContext.Provider>
       </div>
     );
   
